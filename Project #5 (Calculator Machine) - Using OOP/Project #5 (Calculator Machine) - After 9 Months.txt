@@ -1,0 +1,294 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+void CalculateTwoOperands(double operand_1, double operand_2, char op, double& Result)
+{
+    switch (op)
+    {
+    case 'x':
+        Result = operand_1 * operand_2;
+        break;
+
+    case '/':
+        Result = operand_1 / operand_2;
+        break;
+
+    case '+':
+        Result = operand_1 + operand_2;
+        break;
+
+    case '-':
+        Result = operand_1 - operand_2;
+        break;
+    }
+}
+
+void DoCalculating(vector<double>* opd, vector<char>* opt, double &Result)
+{
+    int i = 0;
+
+    while (opt->at(i) != '=')
+    {
+        if (opt->at(i) != '0')
+        {
+            // Calculate part by part
+            CalculateTwoOperands(opd->at(i - 2), opd->at(i - 1), opt->at(i), Result);
+
+            // Remove data that I have  been done with
+            opt->erase(opt->begin() + i);
+            opd->erase(opd->begin() + i);
+            i--;
+            opt->erase(opt->begin() + i);
+            opd->erase(opd->begin() + i);
+            i--;
+            opt->erase(opt->begin() + i);
+            opd->erase(opd->begin() + i);
+
+            // Add Result as an operand
+            opd->insert(opd->begin() + i, Result);
+            opt->insert(opt->begin() + i, '0');
+
+            i = 0;
+            continue;
+        }
+
+        i++;
+    }
+}
+
+void FillOperandsAndOperators(vector<double>* opd, vector<char>* opt, string& Postfix)
+{
+    string* Part = new string;
+
+    for (int i = 0; i < Postfix.length() - 1; i++)
+    {
+        if (Postfix[i] == '|')
+        {
+            i++;
+            while (Postfix[i] != '|')
+            {
+                Part->push_back(Postfix[i]);
+                i++;
+            }
+     
+            i--;
+            if (Part->size() > 1)
+            {
+                (*opd).push_back(stod(*Part));
+                (*opt).push_back('0');
+            }
+            else
+            {
+                if (Postfix[i] == 'x' || Postfix[i] == '+' || Postfix[i] == '-' || Postfix[i] == '/')
+                {
+                    (*opt).push_back(Postfix[i]);
+                    (*opd).push_back(0);
+                }
+                else
+                {
+                    (*opd).push_back(stod(*Part));
+                    (*opt).push_back('0');
+                }
+            }
+        }
+  
+        Part->clear();
+    }
+
+    delete Part;
+}
+
+void CalculateThePostfix(string& Postfix, double &Result)
+{
+    vector<double>* operands = new vector<double>;
+    vector<char>* operators = new vector<char>;
+
+    // Take the random data from postfix expression and seperate them to operators and operands
+    FillOperandsAndOperators(operands, operators, Postfix);
+
+    // Add "=" at the final of the operators
+    operands->push_back(0);
+    operators->push_back('=');
+
+    // Start Calculating DATA I've seperated
+    DoCalculating(operands, operators, Result);
+
+    delete operands;
+    delete operators;
+}
+
+void ConvertInfixToPostfix(string& MathExpression, string& Postfix_Expression)
+{
+    vector<double>* operators = new vector<double>;
+    Postfix_Expression.push_back('|');
+
+    for (int i = 0; i < MathExpression.length(); i++)
+    {
+        if ((i == 0 && MathExpression[i] == '-') || (MathExpression[i] == '-' && MathExpression[i - 1] == '(') || isdigit(MathExpression[i]))
+        {
+            do
+            {
+                Postfix_Expression.push_back(MathExpression[i]);
+                i++;
+            } while (isdigit(MathExpression[i]) || MathExpression[i] == '.');
+
+            Postfix_Expression.push_back('|');
+        }
+
+        if (MathExpression[i] == '(')
+        {
+            (*operators).push_back(MathExpression[i]);
+            continue;
+        }
+
+        if (MathExpression[i] == '+' || MathExpression[i] == '-')
+        {
+            while (!((*operators).empty()) && ((*operators).back() == 'x' || (*operators).back() == '/' || (*operators).back() == '+' || (*operators).back() == '-'))
+            {
+                Postfix_Expression.push_back((*operators).back());
+                Postfix_Expression.push_back('|');
+                (*operators).pop_back();
+            }
+
+            (*operators).push_back(MathExpression[i]);
+            continue;
+        }
+
+        if (MathExpression[i] == 'x' || MathExpression[i] == '/')
+        {
+            while (!((*operators).empty()) && ((*operators).back() == 'x' || (*operators).back() == '/'))
+            {
+                Postfix_Expression.push_back((*operators).back());
+                Postfix_Expression.push_back('|');
+                (*operators).pop_back();
+            }
+
+            (*operators).push_back(MathExpression[i]);
+            continue;
+        }
+
+        if (MathExpression[i] == ')')
+        {
+            while ((*operators).back() != '(')
+            {
+                Postfix_Expression.push_back((*operators).back());
+                Postfix_Expression.push_back('|');
+                (*operators).pop_back();
+            }
+
+            (*operators).pop_back();
+        }
+
+    }
+
+    while (!(*operators).empty())
+    {
+        Postfix_Expression.push_back((*operators).back());
+        Postfix_Expression.push_back('|');
+        (*operators).pop_back();
+    }
+
+    delete operators;
+}
+
+bool CheckErrorsInTheOperation(string& operation)
+{
+    vector<char> parenthesis;
+
+    // Check if there is something except numbers and mathematic operators and dots
+    for (int i = 0; i < operation.length(); i++)
+    {
+        if (operation[i] != '+' && operation[i] != '-' && operation[i] != 'x' && operation[i] != '/' && operation[i] != ')' && operation[i] != '(' && operation[i] != '.')
+        {
+            if (!isdigit(operation[i]))
+                return false;
+        }
+    }
+
+    // Check if the first character start only by an open parenthese or a number or a negative sign
+    if (operation[0] != '(' && operation[0] != '-')
+    {
+        if (!isdigit(operation[0]))
+            return false;
+    }
+
+    // Check if the last character end only by a close parenthese or a number
+    if (operation[operation.length() - 1] != ')')
+    {
+        if (!isdigit(operation[operation.length() - 1]))
+            return false;
+    }
+
+    // Check if there is no two operators next to each other
+    for (int i = 0; i < operation.length() - 1; i++)
+    {
+        if (operation[i] == '+' || operation[i] == '-' || operation[i] == 'x' || operation[i] == '/' || operation[i] == '.')
+            if (operation[i + 1] == '+' || operation[i + 1] == '-' || operation[i + 1] == 'x' || operation[i + 1] == '/' || operation[i + 1] == '.' || operation[i + 1] == ')')
+                return false;
+
+        if (operation[i] == '(')
+            if (operation[i + 1] == '+' || operation[i + 1] == 'x' || operation[i + 1] == '/' || operation[i + 1] == '.' || operation[i + 1] == ')')
+                return false;
+        if (operation[i] == ')')
+        {
+            if ((operation[i + 1] != ')' && isdigit(operation[i + 1])) || (operation[i - 1] != ')' && !isdigit(operation[i - 1])))
+                return false;
+        }
+        if (operation[i] == ')' && i != operation.size() - 1)
+            if (operation[i] == ')' && operation[i + 1] == '(')
+                operation.insert(operation.begin() + i + 1, 'x');
+    }
+
+    // Check that any Open parenthese has closed
+    for (int i = 0; i < operation.length(); i++)
+    {
+        if (operation[i] == '(')
+            parenthesis.push_back('(');
+        if (operation[i] == ')')
+            if (!parenthesis.empty())
+                parenthesis.pop_back();
+            else
+                parenthesis.push_back('(');
+    }
+    if (!parenthesis.empty())
+        return false;
+
+    return true;
+}
+
+int main()
+{
+    string MathExpression;
+    string Postfix_Expression;
+    double Result = 0;
+
+    cout << setw(80) << "++++++ Welcome To Your Free Calculator ++++++\n\n";
+    cout << setw(65) << "Available Operations" << endl;
+    cout << setw(76) << "[+]     [-]     [x]     [/]     [(]     [)]     [.]" << endl << endl;
+
+    //Read And Checking the mathematic expression is it true
+    do
+    {
+        cout << "Please enter your operation: ";
+        getline(cin, MathExpression);
+
+    } while (!CheckErrorsInTheOperation(MathExpression));
+
+    // Convert the infix expression to postfix expression
+    ConvertInfixToPostfix(MathExpression, Postfix_Expression);
+    // Do the calculation of the posftfix
+    CalculateThePostfix(Postfix_Expression, Result);
+
+    cout << endl << endl;
+
+    cout << setw(80) << "*****************************************************************\n";
+    cout << setw(34) << "*    The result of: " << MathExpression << " is " << Result << "    *" << endl;
+    cout << setw(80) << "*****************************************************************\n";
+}
+
+//-3x4+(5-4/(-2)+7-2x4+(3-6/3))+(-2)
+//-3.4x4+(5.2-4.1/(-2.9)+7.25-2.1x4.7+(3.1-6.2/3.4))+(-2)

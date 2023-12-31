@@ -1,0 +1,47 @@
+﻿  Calculator.cpp
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsString.h(43,1): warning C4267: 'return': conversion from 'size_t' to 'short', possible loss of data
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsString.h(48,1): warning C4267: 'return': conversion from 'size_t' to 'short', possible loss of data
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsString.h(60,1): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsString.h(197,1): warning C4267: 'return': conversion from 'size_t' to 'short', possible loss of data
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsString.h(328,1): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsString.h(376,1): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsUtil.h(63,5): warning C4102: 'defualt': unreferenced label
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsScreen.h(56,1): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsConvertMathExpression.h(33,67): warning C4244: 'argument': conversion from '_Ty' to 'const _Elem', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+          and
+          [
+              _Elem=char
+          ]
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsConvertMathExpression.h(46,67): warning C4244: 'argument': conversion from '_Ty' to 'const _Elem', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+          and
+          [
+              _Elem=char
+          ]
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsConvertMathExpression.h(59,67): warning C4244: 'argument': conversion from '_Ty' to 'const _Elem', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+          and
+          [
+              _Elem=char
+          ]
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsConvertMathExpression.h(74,59): warning C4244: 'argument': conversion from '_Ty' to 'const _Elem', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+          and
+          [
+              _Elem=char
+          ]
+C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\Calculator\clsCalculatePostfix.h(67): warning C4715: 'clsCalculatePostfix::_CalculateTwoOperands': not all control paths return a value
+  Calculator.vcxproj -> C:\Users\marou\OneDrive\Desktop\Courses\PROGRAMMING\ProgrammingAdvisesCourses\MyProjectsAboutProgramming\C++ Language\Project #5 (Calculator Machine) - Using OOP\x64\Debug\Calculator.exe
